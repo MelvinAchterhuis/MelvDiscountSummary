@@ -1,0 +1,34 @@
+{% sw_extends '@Storefront/storefront/page/checkout/summary/summary-position.html.twig' %}
+
+{% block page_checkout_summary_position %}
+    {# Check if discount is active in cart and recalculate summaryTotalPrice #}
+    {% set summaryTotalPrice = summary.price.positionPrice %}
+    {% set discountPrice = 0 %}
+    {% if summary.lineItems %}
+        {% set discountPrice = summary.lineItems.elements|filter(lineItem => lineItem.type == 'promotion')|reduce((carry, lineItem) => carry + lineItem.price.totalPrice) %}
+    {% endif %}
+    {% set summaryTotalPrice = summaryTotalPrice - discountPrice %}
+
+    {% block page_checkout_summary_position_label %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block page_checkout_summary_position_value %}
+        {# Replace positionPrice with own calculated summaryPrice #}
+        <dd class="col-5 checkout-aside-summary-value">
+            {{ summaryTotalPrice|currency }}
+        </dd>
+    {% endblock %}
+
+    {% block page_checkout_summary_discount_label %}
+        <dt class="col-7 checkout-aside-summary-label text-success">
+            {{ 'checkout.discount'|trans|sw_sanitize }}
+        </dt>
+    {% endblock %}
+
+    {% block page_checkout_summary_discount_value %}
+        <dd class="col-5 checkout-aside-summary-value text-success">
+            {{ discountPrice|currency }}
+        </dd>
+    {% endblock %}
+{% endblock %}

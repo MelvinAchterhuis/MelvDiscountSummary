@@ -1,0 +1,29 @@
+{
+    "name": "melvinachterhuis/discount-summary-shopware6-plugin",
+    "description": "Show discount in the summary in the cart and checkout",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Melvin Achterhuis"
+        }
+    ],
+    "require": {
+        "shopware/core": "6.4.*",
+        "shopware/storefront": "6.4.*",
+        "shopware/administration": "6.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Melv\\DiscountSummary\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Melv\\DiscountSummary\\MelvDiscountSummary",
+        "label": {
+            "de-DE": "Show discount in summary",
+            "en-GB": "Show discount in summary"
+        }
+    }
+}
