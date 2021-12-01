@@ -21,14 +21,18 @@
     {% endblock %}
 
     {% block page_checkout_summary_discount_label %}
-        <dt class="col-7 checkout-aside-summary-label text-success">
-            {{ 'checkout.discount'|trans|sw_sanitize }}
-        </dt>
+        {% if discountPrice > 0 %}
+            <dt class="col-7 checkout-aside-summary-label text-success">
+                {{ 'checkout.discount'|trans|sw_sanitize }}
+            </dt>
+        {% endif %}
     {% endblock %}
 
     {% block page_checkout_summary_discount_value %}
-        <dd class="col-5 checkout-aside-summary-value text-success">
-            {{ discountPrice|currency }}
-        </dd>
+        {% if discountPrice > 0 %}
+            <dd class="col-5 checkout-aside-summary-value text-success">
+                {{ discountPrice|currency }}
+            </dd>
+        {% endif %}
     {% endblock %}
 {% endblock %}
