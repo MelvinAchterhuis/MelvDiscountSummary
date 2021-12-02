@@ -21,7 +21,7 @@
     {% endblock %}
 
     {% block page_checkout_summary_discount_label %}
-        {% if discountPrice > 0 %}
+        {% if discountPrice < 0 %}
             <dt class="col-7 checkout-aside-summary-label text-success">
                 {{ 'checkout.discount'|trans|sw_sanitize }}
             </dt>
@@ -29,7 +29,7 @@
     {% endblock %}
 
     {% block page_checkout_summary_discount_value %}
-        {% if discountPrice > 0 %}
+        {% if discountPrice < 0 %}
             <dd class="col-5 checkout-aside-summary-value text-success">
                 {{ discountPrice|currency }}
             </dd>
