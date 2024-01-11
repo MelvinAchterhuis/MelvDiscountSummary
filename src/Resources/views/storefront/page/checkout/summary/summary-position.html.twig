@@ -21,7 +21,7 @@
     {% endblock %}
 
     {% block page_checkout_summary_discount_label %}
-        {% if discountPrice < 0 %}
+        {% if discountPrice < 0 and not config('MelvDiscountSummary.config.showPromotionsSeparate') %}
             <dt class="col-7 checkout-aside-summary-label text-success">
                 {{ 'checkout.discount'|trans|sw_sanitize }}
             </dt>
@@ -30,9 +30,20 @@
 
     {% block page_checkout_summary_discount_value %}
         {% if discountPrice < 0 %}
-            <dd class="col-5 checkout-aside-summary-value text-success">
-                {{ discountPrice|currency }}
-            </dd>
+            {% if config('MelvDiscountSummary.config.showPromotionsSeparate') %}
+                {% for promotion in summary.lineItems|filter(lineItem => lineItem.type == 'promotion') %}
+                    <dt class="col-7 checkout-aside-summary-label text-success">
+                        {{ promotion.label }}
+                    </dt>
+                    <dd class="col-5 checkout-aside-summary-value text-success">
+                        {{ promotion.price.totalPrice|currency }}
+                    </dd>
+                {% endfor %}
+            {% else %}
+                <dd class="col-5 checkout-aside-summary-value text-success">
+                    {{ discountPrice|currency }}
+                </dd>
+            {% endif %}
         {% endif %}
     {% endblock %}
 {% endblock %}
